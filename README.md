@@ -1,0 +1,1 @@
+All CRUD methods are implemented in swift.
