@@ -30,7 +30,7 @@ func fetchRecordFromEntity(entity : String, withPredicate predicate: NSPredicate
     var request = NSFetchRequest(entityName: entity)
     request.returnsObjectsAsFaults = false
     request.predicate = predicate
-    var results : NSArray = context.executeFetchRequest(request, error: &error)
+    var results : NSArray = context.executeFetchRequest(request, error: &error)!
     if results.count > 0 {
          return results
     }else{
@@ -44,7 +44,7 @@ func fetchAllRecordsFromEntity(entity : String) ->NSArray{
     var request = NSFetchRequest(entityName: entity)
     request.returnsObjectsAsFaults = false
     //request.includesPropertyValues = false
-    var results : NSArray = context.executeFetchRequest(request, error: &error)
+    var results : NSArray = context.executeFetchRequest(request, error: &error)!
     if results.count > 0 {
         return results
     }else{
@@ -58,7 +58,7 @@ func deleteAllRecordsFromEntity(entity : String){
     var request = NSFetchRequest(entityName: entity)
     request.returnsObjectsAsFaults = false
     request.includesPropertyValues = false
-    var results : NSArray = context.executeFetchRequest(request, error: &error)
+    var results : NSArray = context.executeFetchRequest(request, error: &error)!
     for result in results{
         context.deleteObject(result as NSManagedObject)
     }
@@ -82,15 +82,15 @@ func deleteFromEnity(entity : String, #withPredicate: Dictionary<String,AnyObjec
         }
         i++
     }
-    println(NSPredicate(format: formatString, argumentArray: nil))
-    request.predicate = NSPredicate(format: formatString, argumentArray: nil)
+    println(NSPredicate(format: formatString!, argumentArray: nil))
+    request.predicate = NSPredicate(format: formatString!, argumentArray: nil)
     
-    var results : NSArray = context.executeFetchRequest(request, error: &error)
+    var results : NSArray = context.executeFetchRequest(request, error: &error)!
     var deletedResult: [NSManagedObject] = [];
     for result in results {
         for (field, data) in withPredicate {
             var record : NSManagedObject? = result as? NSManagedObject
-            context.deleteObject(record)
+            context.deleteObject(record!)
             if contextSave() == nil {
                 deletedResult.append(record!)
             }
@@ -116,10 +116,10 @@ func updateRecordsInEntity(entity : String, #dataPairsToUpdate: Dictionary<Strin
         }
         i++
     }
-    println(NSPredicate(format: formatString, argumentArray: nil))
-    request.predicate = NSPredicate(format: formatString, argumentArray: nil)
+    println(NSPredicate(format: formatString!, argumentArray: nil))
+    request.predicate = NSPredicate(format: formatString!, argumentArray: nil)
     
-    var results : NSArray = context.executeFetchRequest(request, error: &error)
+    var results : NSArray = context.executeFetchRequest(request, error: &error)!
     var updatedResult: [NSManagedObject] = [];
     for result in results {
         for (field, data) in dataPairsToUpdate {
@@ -152,8 +152,8 @@ func isRecordExistInEntity(entity : String, #dataPairsToCheck: Dictionary<String
         }
         i++
     }
-    println(NSPredicate(format: formatString, argumentArray: nil))
-    request.predicate = NSPredicate(format: formatString, argumentArray: nil)
+    println(NSPredicate(format: formatString!, argumentArray: nil))
+    request.predicate = NSPredicate(format: formatString!, argumentArray: nil)
     
     var count = context.countForFetchRequest(request, error: &error)
     return count

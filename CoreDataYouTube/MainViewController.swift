@@ -26,7 +26,7 @@ class MainViewController: UIViewController,UITextFieldDelegate {
     }
     
     //MARK: IOS Touch Functions
-    override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!){
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent){
         self.view.endEditing(true)
     }
     
@@ -52,7 +52,7 @@ class MainViewController: UIViewController,UITextFieldDelegate {
     }
     
     @IBAction func load(sender : UIButton) {
-        var results : NSArray = fetchRecordFromEntity("Users", withPredicate: NSPredicate(format: "username = %@", "" + txtUsername.text)) //
+        var results : NSArray = fetchRecordFromEntity("Users", withPredicate: NSPredicate(format: "username = %@", "" + txtUsername.text)!) //
         if results.count > 0 {
             var res = results[0] as NSManagedObject
             txtUsername.text = res.valueForKey("username") as String
